@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Global Logistics ERP - Invoice Entry</title>
+    <!-- Подключаем стили Bootstrap для красивого вида -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body { background-color: #f4f6f9; }
+        .header { background-color: #0d6efd; color: white; padding: 15px; margin-bottom: 20px; }
+        .container { background: white; padding: 30px; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); max-width: 800px; }
+        .form-label { font-weight: 600; color: #495057; }
+        .btn-submit { width: 100%; padding: 10px; font-size: 1.1rem; }
+    </style>
+</head>
+<body>
+
+<div class="header">
+    <div class="d-flex justify-content-between align-items-center px-4">
+        <h4>🌐 Global Logistics ERP</h4>
+        <span>User: Bot_01 | <a href="#" class="text-white">Logout</a></span>
+    </div>
+</div>
+
+<div class="container">
+    <h3 class="mb-4 text-primary">New Invoice Entry</h3>
+    <form id="erpForm">
+        
+        <!-- Section 1: Document Info -->
+        <h5 class="border-bottom pb-2 mb-3">Document Details</h5>
+        <div class="row mb-3">
+            <div class="col-md-6">
+                <label for="invoiceId" class="form-label">Invoice ID</label>
+                <input type="text" class="form-control" id="invoiceId" placeholder="e.g. 25156876">
+            </div>
+            <div class="col-md-6">
+                <label for="invoiceDate" class="form-label">Date</label>
+                <input type="date" class="form-control" id="invoiceDate">
+            </div>
+        </div>
+
+        <!-- Section 2: Vendor & Customer -->
+        <h5 class="border-bottom pb-2 mb-3 mt-4">Parties involved</h5>
+        <div class="row mb-3">
+            <div class="col-md-6">
+                <label for="vendorName" class="form-label">Customer Name</label>
+                <input type="text" class="form-control" id="vendorName" value="Smart Seven Mini Mart LLC" readonly>
+            </div>
+            <div class="col-md-6">
+                <label for="customerName" class="form-label">Vendor Name</label>
+                <select class="form-select" id="customerName">
+                    <option selected>Choose vendor...</option>
+                    <option value="Transmed Overseas Incorporated S.A.">Transmed Overseas Incorporated S.A.</option>
+                    <option value="United Sales Partners LLC">United Sales Partners LLC</option>
+                    <option value="The Deep Seafood Сo. L.L.C">The Deep Seafood Сo. L.L.C</option>
+                    <option value="SARYA GENERAL TRADING L.L.C.">SARYA GENERAL TRADING L.L.C</option>
+                    <option value="National Dairy L.L.С.">National Dairy L.L.С.</option>
+                    <option value="LETO TRADING L.L.C">LETO TRADING L.L.C</option>
+                </select>
+            </div>
+        </div>
+        
+        <div class="mb-3">
+            <label for="deliveryAddress" class="form-label">Delivery Address</label>
+            <textarea class="form-control" id="deliveryAddress" rows="2" placeholder="Auto-fill from OCR"></textarea>
+        </div>
+
+        <!-- Section 3: Financials -->
+        <h5 class="border-bottom pb-2 mb-3 mt-4">Financials</h5>
+        <div class="row mb-3">
+            <div class="col-md-4">
+                <label for="currency" class="form-label">Currency</label>
+                <select class="form-select" id="currency">
+                    <option value="AED">AED (Dirham)</option>
+                    <option value="USD">USD</option>
+                    <option value="EUR">EUR</option>
+                </select>
+            </div>
+            <div class="col-md-4">
+                <label for="taxId" class="form-label">Tax ID (TRN)</label>
+                <input type="text" class="form-control" id="taxId">
+            </div>
+            <div class="col-md-4">
+                <label for="totalAmount" class="form-label">Total Amount</label>
+                <div class="input-group">
+                    <span class="input-group-text">AED</span>
+                    <input type="number" class="form-control" id="totalAmount" step="0.01">
+                </div>
+            </div>
+        </div>
+
+        <div class="form-check mb-4">
+            <input class="form-check-input" type="checkbox" id="validationCheck">
+            <label class="form-check-label" for="validationCheck">
+                I confirm the data matches the original document
+            </label>
+        </div>
+
+        <button type="button" class="btn btn-primary btn-submit" onclick="submitForm()">Submit to Database</button>
+    </form>
+</div>
+
+<!-- Модальное окно успешной отправки -->
+<div class="modal fade" id="successModal" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header bg-success text-white">
+        <h5 class="modal-title">Success</h5>
+      </div>
+      <div class="modal-body">
+        <p>Invoice successfully processed and sent to SAP Core.</p>
+        <p>Transaction ID: <strong>#TX-998821</strong></p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" onclick="location.reload()">Process Next</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    function submitForm() {
+        // Простая имитация задержки обработки
+        const btn = document.querySelector('.btn-submit');
+        btn.innerHTML = 'Processing...';
+        setTimeout(() => {
+            var myModal = new bootstrap.Modal(document.getElementById('successModal'));
+            myModal.show();
+            btn.innerHTML = 'Submit to Database';
+        }, 1000);
+    }
+</script>
+
+</body>
+</html>
