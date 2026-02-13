@@ -36,10 +36,18 @@
             <h3 class="text-primary mb-0">Financial Reporting Console</h3>
             <p class="text-secondary small">Review and extract processed invoice data</p>
         </div>
-        <button class="btn btn-success shadow-sm" id="exportBtn" onclick="exportToExcel()">
-            <span id="exportText">📥 Download XLSX Report</span>
-            <span id="spinner" class="spinner-border spinner-border-sm d-none" role="status"></span>
-        </button>
+        <!-- БЛОК С КНОПКАМИ -->
+        <div class="d-flex gap-2">
+            <!-- НОВАЯ КНОПКА ПЕРЕХОДА -->
+            <a href="form.html" class="btn btn-primary shadow-sm d-flex align-items-center">
+                <span class="me-1">➕</span> New Invoice Entry
+            </a>
+            
+            <button class="btn btn-success shadow-sm" id="exportBtn" onclick="exportToExcel()">
+                <span id="exportText">📥 Download XLSX Report</span>
+                <span id="spinner" class="spinner-border spinner-border-sm d-none" role="status"></span>
+            </button>
+        </div>
     </div>
 
     <!-- Filters Section -->
@@ -145,10 +153,7 @@
                         <td class="ps-3 fw-bold">#TX-998821</td>
                         <td>2025-06-28</td>
                         <td>LETO TRADING L.L.C</td>
-                        <td>Warehouse 2, 16B Street
-Ras Al Khor, Industrial Area 2
-Dubai
-U.A.E</td>
+                        <td>Warehouse 2, 16B Street Ras Al Khor, Industrial Area 2 Dubai U.A.E</td>
                         <td>AED</td>
                         <td>684.44</td>
                         <td><span class="status-processed">Processed</span></td>
@@ -170,7 +175,6 @@ U.A.E</td>
         const text = document.getElementById('exportText');
         const spinner = document.getElementById('spinner');
 
-        // Имитация задержки для демо
         btn.classList.add('disabled');
         text.innerText = 'Generating XLSX...';
         spinner.classList.remove('d-none');
@@ -179,13 +183,9 @@ U.A.E</td>
             const table = document.getElementById('reportTable');
             const tableClone = table.cloneNode(true);
             
-            // Удаляем кнопки "View" перед экспортом
             tableClone.querySelectorAll('.no-export').forEach(el => el.remove());
 
-            // Создаем книгу Excel
             const workbook = XLSX.utils.table_to_book(tableClone, { sheet: "Invoice Report" });
-
-            // Скачиваем файл
             XLSX.writeFile(workbook, "ERP_Logistics_Report.xlsx");
 
             spinner.classList.add('d-none');
